@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 var velocity = Vector2.ZERO
-var move_speed = 400
+var move_speed = 700
 var gravity = 1200
 var jump_force = -720
 var is_grounded
@@ -12,11 +12,13 @@ func _physics_process(delta: float) -> void:
 	
 	_get_input()
 	
-	move_and_slide(velocity)
+	velocity = move_and_slide(velocity)
 	
 	is_grounded = _check_is_ground()
 	
 	_set_animation()
+	
+#	print(velocity.y)
 	
 func _get_input():
 	velocity.x = 0
@@ -24,7 +26,7 @@ func _get_input():
 	velocity.x = lerp(velocity.x, move_speed * move_direction, 0.2)
 	
 	if move_direction != 0:
-		$texture.scale.x = move_direction		
+		$texture.scale.x = move_direction
 		
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("jump") and is_grounded:
